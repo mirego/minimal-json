@@ -96,7 +96,11 @@ class OptimizedJsonNumber extends JsonValue {
     }
 
     private double fullDouble() {
-        return integerPart * Math.pow(10, exponentPart) + fractionPart * Math.pow(10, exponentPart - fractionScale);
+        if (isPositive) {
+            return integerPart * Math.pow(10, exponentPart) + fractionPart * Math.pow(10, exponentPart - fractionScale);
+        } else {
+            return -1 * (Math.abs(integerPart) * Math.pow(10, exponentPart) + fractionPart * Math.pow(10, exponentPart - fractionScale));
+        }
     }
 
     @Override
