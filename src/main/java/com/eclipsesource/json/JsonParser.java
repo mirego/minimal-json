@@ -296,7 +296,6 @@ public class JsonParser {
         fractionPart = readFraction();
         capturedFractionCountBuffer = fractionCount; // Reading the exponent will alter the real fractionCount value
         exponentPart = readExponent();
-        exponentPart = isExponentPositive ? exponentPart : (short) (-1 * exponentPart);
 
         if (capturedFractionCountBuffer == 0 && exponentPart == 0 && integerPart > Integer.MIN_VALUE && integerPart < Integer.MAX_VALUE) {
             return new JsonInt((int) (isPositive ? integerPart : -1 * integerPart));
@@ -346,7 +345,9 @@ public class JsonParser {
             return 0;
         }
         isExponentPositive = readSign();
-        return (short) readInteger();
+        short exponent = (short) readInteger();
+        return isExponentPositive ? exponent : (short) (-1 * exponent);
+
     }
 
     private boolean readChar(char ch) throws IOException {
