@@ -42,7 +42,9 @@ public class JsonParser {
     private long fractionPart;
     private short exponentPart;
     private byte fractionCount;
+    private byte capturedFractionCountBuffer;
     private boolean isPositive;
+    private boolean isExponentPositive;
     private int captureStart;
     private CachedJsonString.KeyFromBuffer reusedCachedJsonStringKey;
 
@@ -292,13 +294,14 @@ public class JsonParser {
         isPositive = readSign();
         integerPart = readInteger();
         fractionPart = readFraction();
+        capturedFractionCountBuffer = fractionCount; // Reading the exponent will alter the real fractionCount value
         exponentPart = readExponent();
 
-        if (fractionCount == 0 && exponentPart == 0 && integerPart > Integer.MIN_VALUE && integerPart < Integer.MAX_VALUE) {
+        if (capturedFractionCountBuffer == 0 && exponentPart == 0 && integerPart > Integer.MIN_VALUE && integerPart < Integer.MAX_VALUE) {
             return new JsonInt((int) (isPositive ? integerPart : -1 * integerPart));
         }
 
-        return new OptimizedJsonNumber(integerPart, fractionPart, fractionCount, exponentPart, isPositive);
+        return new OptimizedJsonNumber(integerPart, fractionPart, capturedFractionCountBuffer, exponentPart, isPositive);
     }
 
     private boolean readSign() throws IOException {
@@ -341,7 +344,10 @@ public class JsonParser {
         if (!readChar('e') && !readChar('E')) {
             return 0;
         }
-        return (short) readInteger();
+        isExponentPositive = readSign();
+        short exponent = (short) readInteger();
+        return isExponentPositive ? exponent : (short) (-1 * exponent);
+
     }
 
     private boolean readChar(char ch) throws IOException {

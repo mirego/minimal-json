@@ -13,7 +13,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("123.4567e2", number.toString());
         assertEquals(12345, number.asInt());
-        assertEquals(12345l, number.asLong());
+        assertEquals(12345L, number.asLong());
         assertEquals(12345.67f, number.asFloat(), 1e-3);
         assertEquals(12345.67, number.asDouble(), 1e-10);
     }
@@ -25,7 +25,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("12345", number.toString());
         assertEquals(12345, number.asInt());
-        assertEquals(12345l, number.asLong());
+        assertEquals(12345L, number.asLong());
         assertEquals(12345f, number.asFloat(), 1e-3);
         assertEquals(12345d, number.asDouble(), 1e-10);
     }
@@ -37,9 +37,33 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("12345e-2", number.toString());
         assertEquals(123, number.asInt());
-        assertEquals(123l, number.asLong());
+        assertEquals(123L, number.asLong());
         assertEquals(123.45f, number.asFloat(), 1e-3);
         assertEquals(123.45d, number.asDouble(), 1e-10);
+    }
+
+    @Test
+    public void test_negative_integer_with_exp(){
+        // -2.5e4
+        OptimizedJsonNumber number = new OptimizedJsonNumber(2, 5, (byte) 1, (short) 4, false);
+
+        assertEquals("-2.5e4", number.toString());
+        assertEquals(-25000, number.asInt());
+        assertEquals(-25000L, number.asLong());
+        assertEquals(-25000f, number.asFloat(), 1e-3);
+        assertEquals(-25000d, number.asDouble(), 1e-10);
+    }
+
+    @Test
+    public void test_negative_integer_with_negative_exp(){
+        // -2.5e-4
+        OptimizedJsonNumber number = new OptimizedJsonNumber(2, 5, (byte) 1, (short) -4, false);
+
+        assertEquals("-2.5e-4", number.toString());
+        assertEquals(0, number.asInt());
+        assertEquals(0, number.asLong());
+        assertEquals(-0.00025f, number.asFloat(), 1e-3);
+        assertEquals(-0.00025d, number.asDouble(), 1e-10);
     }
 
     @Test
@@ -49,7 +73,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("12345.6789", number.toString());
         assertEquals(12345, number.asInt());
-        assertEquals(12345l, number.asLong());
+        assertEquals(12345L, number.asLong());
         assertEquals(12345.6789f, number.asFloat(), 1e-3);
         assertEquals(12345.6789d, number.asDouble(), 1e-10);
     }
@@ -61,7 +85,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("-73.5716511", number.toString());
         assertEquals(-73, number.asInt());
-        assertEquals(-73l, number.asLong());
+        assertEquals(-73L, number.asLong());
         assertEquals(-73.5716f, number.asFloat(), 1e-3);
         assertEquals(-73.5716511d, number.asDouble(), 1e-10);
     }
@@ -69,11 +93,11 @@ public class OptimizedJsonNumberTest {
     @Test
     public void test_high_precision_double() {
         // 45.5122363923859
-        OptimizedJsonNumber number = new OptimizedJsonNumber(45, 5122363923859l, (byte) 13, (short) 0, true);
+        OptimizedJsonNumber number = new OptimizedJsonNumber(45, 5122363923859L, (byte) 13, (short) 0, true);
 
         assertEquals("45.5122363923859", number.toString());
         assertEquals(45, number.asInt());
-        assertEquals(45l, number.asLong());
+        assertEquals(45L, number.asLong());
         assertEquals(45.5122f, number.asFloat(), 1e-3);
         assertEquals(45.5122363923859d, number.asDouble(), 1e-10);
     }
@@ -85,7 +109,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("0.6789", number.toString());
         assertEquals(0, number.asInt());
-        assertEquals(0l, number.asLong());
+        assertEquals(0L, number.asLong());
         assertEquals(0.6789f, number.asFloat(), 1e-3);
         assertEquals(0.6789d, number.asDouble(), 1e-10);
     }
@@ -97,7 +121,7 @@ public class OptimizedJsonNumberTest {
 
         assertEquals("-0.6789", number.toString());
         assertEquals(0, number.asInt());
-        assertEquals(0l, number.asLong());
+        assertEquals(0L, number.asLong());
         assertEquals(-0.6789f, number.asFloat(), 1e-3);
         assertEquals(-0.6789d, number.asDouble(), 1e-10);
     }
