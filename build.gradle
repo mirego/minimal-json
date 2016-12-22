@@ -42,3 +42,14 @@ bintray {
     }
     publications = ['maven']
 }
+
+release {
+    checkTasks = [
+            ':clean',
+            ':check'
+    ]
+    buildTasks = [
+            ':bintrayUpload'
+    ]
+    tagPrefix = 'minimal-json-'
+}
