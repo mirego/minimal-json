@@ -19,7 +19,7 @@ Add the following dependency to your build.gradle file:
 ```groovy
 repositories {
     maven {
-    	url 'https://mirego.bintray.com/public'
+    	delegate.miregoPublic()
     }
 }
 
