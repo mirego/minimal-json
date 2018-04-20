@@ -1,13 +1,12 @@
 buildscript {
     repositories {
-        miregoCommon()
+        delegate.miregoCommon()
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'mirego.release'
-apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'mirego.publish'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -36,20 +35,13 @@ publishing {
     }
 }
 
-bintray {
-    pkg {
-        repo = 'common'
-    }
-    publications = ['maven']
-}
-
 release {
     checkTasks = [
             ':clean',
             ':check'
     ]
     buildTasks = [
-            ':bintrayUpload'
+            ':publish'
     ]
     tagPrefix = 'minimal-json-'
 }
