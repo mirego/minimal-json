@@ -43,7 +43,7 @@ job(context.jobFullName) {
         slackNotifier {
             notifyFailure(true)
             notifyBackToNormal(true)
-            room(slackChannel)
+            room(context.slackChannel)
         }
     }
 }
