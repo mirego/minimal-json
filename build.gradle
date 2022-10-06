@@ -1,12 +1,16 @@
 buildscript {
     repositories {
-        delegate.miregoCommon()
+        mavenLocal()
+        mavenCentral()
+        delegate.miregoPublic()
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'mirego.release'
-apply plugin: 'mirego.publish'
+plugins {
+    id 'java'
+    id 'mirego.release' version '2.1'
+    id 'mirego.publish' version '1.4'
+}
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -14,7 +18,8 @@ targetCompatibility = 1.7
 
 repositories {
     mavenLocal()
-    jcenter()
+    mavenCentral()
+    delegate.miregoPublic()
 }
 
 dependencies {
