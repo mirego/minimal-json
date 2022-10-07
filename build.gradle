@@ -4,8 +4,8 @@ plugins {
     id 'mirego.publish' version '1.4'
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
