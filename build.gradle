@@ -1,24 +1,20 @@
-buildscript {
-    repositories {
-        delegate.miregoCommon()
-    }
+plugins {
+    id 'java'
+    id 'mirego.release' version '2.1'
+    id 'mirego.publish' version '1.4'
 }
 
-apply plugin: 'java'
-apply plugin: 'mirego.release'
-apply plugin: 'mirego.publish'
-
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenLocal()
-    jcenter()
+    mavenCentral()
+    delegate.miregoPublic()
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 task sourceJar(type: Jar) {
